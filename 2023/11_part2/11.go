@@ -10,7 +10,7 @@ import (
 var input string
 
 func main() {
-    fmt.Println("Day 11 - Part 1")
+    fmt.Println("Day 11 - Part 2")
 
     points := make([]Point, 0)
     grid := strings.Split(input, "\n")
@@ -18,11 +18,11 @@ func main() {
     expansionCols := []int{}
     maxCol := len(grid[0])
     for i := 0; i < maxCol; i++ {
-        expansionCols = append(expansionCols, 1)
+        expansionCols = append(expansionCols, 999999)
     }
     maxRow := len(grid)
     for i := 0; i < maxRow; i++ {
-        expansionRows = append(expansionRows, 1)
+        expansionRows = append(expansionRows, 999999)
     }
 
     for y, line := range grid {
@@ -35,7 +35,7 @@ func main() {
             }
         }
     }
-    
+    fmt.Println(points) 
     for i := 1; i < len(expansionRows); i++ {
         expansionRows[i] = expansionRows[i] + expansionRows[i-1]
     }
@@ -46,6 +46,8 @@ func main() {
         points[i].x += expansionCols[points[i].x]
         points[i].y += expansionRows[points[i].y]
     }
+    fmt.Println(expansionCols)
+    fmt.Println(expansionRows)
     fmt.Println(points)
 
     sum := 0
