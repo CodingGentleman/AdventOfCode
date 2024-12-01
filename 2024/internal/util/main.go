@@ -1,9 +1,9 @@
 package util
 
 import (
-    "os"
 	"log"
-    "strings"
+	"os"
+	"strings"
 )
 
 func ReadAsString(filePath string) string {
@@ -15,6 +15,6 @@ func ReadAsString(filePath string) string {
 }
 
 func ReadAsArray(filePath string) []string {
-    data := ReadAsString(filePath)
-    return strings.Split(data, "\n")
+	data := ReadAsString(filePath)
+	return strings.Split(data, "\n")
 }
