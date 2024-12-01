@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	arr0 := []int{}
+    arr0 := []int{}
     dict1 := make(map[int]int)
-	util.StreamFile("input", func(line string) {
+    util.StreamFile("input", func(line string) {
 		var val0, val1 int
 		fmt.Sscanf(line, "%d   %d", &val0, &val1)
 		arr0 = append(arr0, val0)
