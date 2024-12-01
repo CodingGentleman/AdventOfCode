@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bufio"
 	"log"
 	"os"
 	"strings"
@@ -17,4 +18,22 @@ func ReadAsString(filePath string) string {
 func ReadAsArray(filePath string) []string {
 	data := ReadAsString(filePath)
 	return strings.Split(data, "\n")
+}
+
+func StreamFile(filePath string, callback func(string)) {
+	f, err := os.OpenFile(filePath, os.O_RDONLY, os.ModePerm)
+	if err != nil {
+		log.Fatalf("open file error: %v", err)
+		return
+	}
+	defer f.Close()
+
+	sc := bufio.NewScanner(f)
+	for sc.Scan() {
+		callback(sc.Text())
+	}
+	if err := sc.Err(); err != nil {
+		log.Fatalf("scan file error: %v", err)
+		return
+	}
 }
