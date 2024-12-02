@@ -37,3 +37,10 @@ func StreamFile(filePath string, callback func(string)) {
 		return
 	}
 }
+
+func Abs(value int) int {
+    if value < 0 {
+        return -value
+    }
+    return value
+}

@@ -19,11 +19,7 @@ func main() {
 	sort.Ints(arr1)
 	sumDistance := 0
 	for index, val := range arr0 {
-		distance := arr1[index] - val
-		if distance < 0 {
-			distance = -distance
-		}
-		sumDistance += distance
+		sumDistance += util.Abs(arr1[index] - val)
 	}
 	fmt.Println(sumDistance)
 }
