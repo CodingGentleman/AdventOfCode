@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strings"
+    "strconv"
 )
 
 func ReadAsString(filePath string) string {
@@ -43,4 +44,9 @@ func Abs(value int) int {
         return -value
     }
     return value
+}
+
+func ToInt(value string) int {
+    i, _ := strconv.Atoi(value)
+    return i
 }
