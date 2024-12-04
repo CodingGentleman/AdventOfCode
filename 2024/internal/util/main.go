@@ -21,6 +21,28 @@ func ReadAsArray(filePath string) []string {
 	return strings.Split(data, "\n")
 }
 
+func ReadAsGrid(filePath string) [][]string {
+	f, err := os.OpenFile(filePath, os.O_RDONLY, os.ModePerm)
+	if err != nil {
+		log.Fatalf("open file error: %v", err)
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	grid := make([][]string, 0)
+	for i := 0; scanner.Scan(); i++ {
+		line := scanner.Text()
+		grid = append(grid, make([]string, len(line)))
+		for j, c := range line {
+			grid[i][j] = string(c)
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("scan file error: %v", err)
+	}
+	return grid
+}
+
 func StreamFile(filePath string, callback func(string)) {
 	f, err := os.OpenFile(filePath, os.O_RDONLY, os.ModePerm)
 	if err != nil {
