@@ -4,8 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
-	"strings"
 )
 
 func main() {
@@ -51,7 +49,6 @@ func main() {
 			}
 		}
 	}
-	printTracking(tracking, originMap, max)
 	fmt.Println(len(tracking))
 }
 
@@ -64,31 +61,4 @@ func (p *Point) ToString() string {
 }
 func (p *Point) InBoundsOf(max Point) bool {
 	return p.x >= 0 && p.x <= max.x && p.y >= 0 && p.y <= max.y
-}
-
-func printTracking(tracking map[string]struct{}, originMap map[string][]Point, max Point) {
-	render := make([][]string, max.y+1)
-	values := make([]string, 0)
-	for k := range tracking {
-		values = append(values, k)
-	}
-	for y := 0; y <= max.y; y++ {
-		for x := 0; x <= max.x; x++ {
-			render[y] = append(render[y], ".")
-		}
-	}
-	for _, v := range values {
-		p := strings.Split(v, ",")
-		x, _ := strconv.Atoi(p[0])
-		y, _ := strconv.Atoi(p[1])
-		render[y][x] = "#"
-	}
-	for k, v := range originMap {
-		for _, p := range v {
-			render[p.y][p.x] = k
-		}
-	}
-	for y := 0; y <= max.y; y++ {
-		fmt.Println(strings.Join(render[y], ""))
-	}
 }
