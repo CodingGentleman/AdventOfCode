@@ -61,6 +61,24 @@ func StreamFile(filePath string, callback func(string)) {
 	}
 }
 
+func StreamFileWithIndex(filePath string, callback func(int, string)) {
+	f, err := os.OpenFile(filePath, os.O_RDONLY, os.ModePerm)
+	if err != nil {
+		log.Fatalf("open file error: %v", err)
+		return
+	}
+	defer f.Close()
+
+	sc := bufio.NewScanner(f)
+	for i := 0; sc.Scan(); i++ {
+		callback(i, sc.Text())
+	}
+	if err := sc.Err(); err != nil {
+		log.Fatalf("scan file error: %v", err)
+		return
+	}
+}
+
 func Abs(value int) int {
     if value < 0 {
         return -value
