@@ -17,27 +17,29 @@ func main() {
 			values = append(values, obj)
 		}
 	})
-	moved := true
-	for moved {
-		moved = rearrange(values)
-	}
-	fmt.Println(values)
-}
-
-func rearrange(values []obj) bool {
 	for j := len(values) - 1; j > 0; j-- {
 		if values[j].val != -1 {
 			for i := 0; i < j; i++ {
 				if values[i].val == -1 && values[i].len >= values[j].len {
 					values[i].len -= values[j].len
-					// move element at j to i-1
 					values = append(values[:i], append([]obj{values[j]}, values[i:]...)...)
-					return true
+					values[j+1].val = -1
+					break
 				}
 			}
 		}
 	}
-	return false
+	num := 0
+	sum := 0
+	for i := 0; i < len(values); i++ {
+		for j := 0; j < values[i].len; j++ {
+			if values[i].val != -1 {
+				sum += values[i].val * num
+			}
+			num++
+		}
+	}
+	fmt.Println(sum)
 }
 
 type obj struct {
