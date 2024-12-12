@@ -90,3 +90,11 @@ func ToInt(value string) int {
     i, _ := strconv.Atoi(value)
     return i
 }
+
+func ToIntArray(values []string) []int {
+    result := make([]int, len(values))
+    for i, v := range values {
+        result[i] = ToInt(v)
+    }
+    return result
+}
