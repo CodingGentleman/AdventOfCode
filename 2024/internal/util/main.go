@@ -2,10 +2,11 @@ package util
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
-    "strconv"
 )
 
 func ReadAsString(filePath string) string {
@@ -21,7 +22,7 @@ func ReadAsArray(filePath string) []string {
 	return strings.Split(data, "\n")
 }
 
-func ReadAsGrid(filePath string) [][]string {
+func ReadAsGrid[T any](filePath string, convert func(int, int, rune)T) [][]T {
 	f, err := os.OpenFile(filePath, os.O_RDONLY, os.ModePerm)
 	if err != nil {
 		log.Fatalf("open file error: %v", err)
@@ -29,12 +30,12 @@ func ReadAsGrid(filePath string) [][]string {
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
-	grid := make([][]string, 0)
+	grid := make([][]T, 0)
 	for i := 0; scanner.Scan(); i++ {
 		line := scanner.Text()
-		grid = append(grid, make([]string, len(line)))
+		grid = append(grid, make([]T, len(line)))
 		for j, c := range line {
-			grid[i][j] = string(c)
+            grid[i][j] = convert(i,j,c)
 		}
 	}
 	if err := scanner.Err(); err != nil {
@@ -77,6 +78,15 @@ func StreamFileWithIndex(filePath string, callback func(int, string)) {
 		log.Fatalf("scan file error: %v", err)
 		return
 	}
+}
+
+func PrintGrid(grid [][]string) {
+    for _, row := range grid {
+        for _, cell := range row {
+            fmt.Print(cell)
+        }
+        fmt.Println()
+    }
 }
 
 func Abs(value int) int {

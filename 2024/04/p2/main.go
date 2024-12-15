@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	grid := util.ReadAsGrid("input")
+	grid := util.ReadAsGrid("input", func(r rune) string { return string(r) })
 	sum := 0
 	for i := 1; i < len(grid)-1; i++ {
 		for j := 1; j < len(grid[i])-1; j++ {
